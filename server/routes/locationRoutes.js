@@ -16,20 +16,20 @@ router.get('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
   try {
-    const searchVal = req.body.value;
+    const searchVal = req.headers.value;
     const locations = await db('location');
-    const testArr = [];
+    const searchArr = [];
     for (let i = 0; i < locations.length; i++) {
       if (locations[i].postcode.toLowerCase().includes(searchVal)) {
-        testArr.push(locations[i]);
+        searchArr.push(locations[i]);
       }
       if (locations[i].name.toLowerCase().includes(searchVal)) {
-        if (!testArr.includes(locations[i].name)) {
-          testArr.push(locations[i]);
+        if (!searchArr.includes(locations[i].name)) {
+          searchArr.push(locations[i]);
         }
       }
     }
-    res.status(200).json(testArr);
+    res.status(200).json(searchArr);
   } catch (error) {
     res.status(400).json({
       errorMessage: `${error}`

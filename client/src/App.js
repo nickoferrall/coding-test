@@ -16,7 +16,7 @@ function App() {
     <div>
       <h3>Our Store</h3>
       <Filter handleChange={handleChange} setSearch={setSearch} />
-      <SearchList />
+      <SearchList search={search} />
     </div>
   );
 }
