@@ -17,14 +17,13 @@ router.get('/', async (req, res) => {
 router.get('/search', async (req, res) => {
   try {
     const searchVal = req.body.value;
-    console.log('SEARCH VAL', req.body.value);
     const locations = await db('location');
     const testArr = [];
     for (let i = 0; i < locations.length; i++) {
-      if (locations[i].postcode.toLowerCase().includes('br')) {
+      if (locations[i].postcode.toLowerCase().includes(searchVal)) {
         testArr.push(locations[i]);
       }
-      if (locations[i].name.toLowerCase().includes('br')) {
+      if (locations[i].name.toLowerCase().includes(searchVal)) {
         if (!testArr.includes(locations[i].name)) {
           testArr.push(locations[i]);
         }
