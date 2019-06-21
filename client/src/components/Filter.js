@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function Filter() {
+export default function Filter({ handleChange }) {
+  useEffect(() => {});
   return (
     <div>
-      <textarea />
+      <textarea onChange={letter => handleChange(letter)} />
     </div>
   );
 }
