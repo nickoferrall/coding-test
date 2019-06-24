@@ -1,10 +1,11 @@
 import React from 'react';
+import ListItemText from '@material-ui/core/ListItemText';
 
 export default function Address({ data }) {
   return (
     <div>
-      <span>{data.name}</span>
-      <span>{data.postcode}</span>
+      <ListItemText>{data.name}</ListItemText>
+      <ListItemText>{data.postcode}</ListItemText>
     </div>
   );
 }

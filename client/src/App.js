@@ -1,24 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import SearchList from './components/SearchList';
 import Filter from './components/Filter';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
-function App() {
+const styles = theme => ({
+  main: {
+    width: '380px',
+    margin: '10px auto',
+    padding: 30,
+    backgroundColor: '#fafafa',
+    [theme.breakpoints.up('sm')]: {
+      width: '580px'
+    }
+  }
+});
+
+function App({ classes }) {
   const [search, setSearch] = useState('');
 
   const handleChange = letter => {
-    console.log('We;re in', letter.target.value);
     setSearch(letter.target.value);
   };
 
-  console.log('Search..', search);
-
   return (
-    <div>
-      <h3>Our Store</h3>
-      <Filter handleChange={handleChange} setSearch={setSearch} />
-      <SearchList search={search} />
-    </div>
+    <>
+      <img
+        style={{ float: 'right', width: '300px' }}
+        src="https://media.giphy.com/media/enTimXqzmVXR6/giphy.gif"
+      />
+      <Paper className={classes.main} elevation={10}>
+        <Typography variant="h3">Our Store</Typography>
+        <Filter handleChange={handleChange} setSearch={setSearch} />
+        <SearchList search={search} />
+      </Paper>
+    </>
   );
 }
 
-export default App;
+export default withStyles(styles)(App);

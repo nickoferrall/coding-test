@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
 
 export default function Filter({ handleChange }) {
-  useEffect(() => {});
   return (
     <div>
-      <textarea onChange={letter => handleChange(letter)} />
+      <TextField onChange={letter => handleChange(letter)} />
     </div>
   );
 }

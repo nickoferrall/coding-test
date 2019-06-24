@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Address from './Address';
 import axios from 'axios';
+import List from '@material-ui/core/List';
 
-export default function SearchList({ search }) {
+const styles = {
+  section: {
+    padding: 0,
+    marginTop: 10,
+    backgroundColor: '#fafafa'
+  }
+};
+
+function SearchList({ search, classes }) {
   const [addresses, setAddresses] = useState('');
   const baseUrl = 'http://localhost:9000/api';
-
-  useEffect(() => {
-    filterAddresses();
-  }, [search]);
 
   const filterAddresses = async () => {
     if (!search) {
@@ -32,12 +38,18 @@ export default function SearchList({ search }) {
     }
   };
 
+  useEffect(() => {
+    filterAddresses();
+  }, [search]);
+
   let mappedData;
   if (addresses) {
     mappedData = addresses.map((val, index) => {
       return (
         <>
-          <Address key={index} data={val} />
+          <List className={classes.section}>
+            <Address key={index} data={val} />
+          </List>
         </>
       );
     });
@@ -45,3 +57,5 @@ export default function SearchList({ search }) {
 
   return <div>{mappedData}</div>;
 }
+
+export default withStyles(styles)(SearchList);
