@@ -16,20 +16,27 @@ router.get('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
   try {
-    const searchVal = req.headers.value;
+    const searchVal = req.headers.value.toLowerCase();
     const locations = await db('location');
-    const searchArr = [];
+    const postcodeArr = [];
     for (let i = 0; i < locations.length; i++) {
       if (locations[i].postcode.toLowerCase().includes(searchVal)) {
-        searchArr.push(locations[i]);
-      }
-      if (locations[i].name.toLowerCase().includes(searchVal)) {
-        if (!searchArr.includes(locations[i].name)) {
-          searchArr.push(locations[i]);
-        }
+        postcodeArr.push(locations[i]);
       }
     }
-    res.status(200).json(searchArr);
+
+    let nameArr = [];
+    for (let i = 0; i < locations.length; i++) {
+      if (
+        !postcodeArr.includes(locations[i].name) &&
+        locations[i].name.toLowerCase().includes(searchVal)
+      ) {
+        nameArr.push(locations[i]);
+      }
+    }
+    nameArr.sort((a, b) => a.name > b.name);
+    const mergedArr = postcodeArr.concat(nameArr);
+    res.status(200).json(mergedArr);
   } catch (error) {
     res.status(400).json({
       errorMessage: `${error}`
